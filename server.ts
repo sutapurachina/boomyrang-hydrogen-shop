@@ -14,8 +14,8 @@ import {
   getStorefrontHeaders,
   type AppLoadContext,
 } from '@shopify/remix-oxygen';
-import {AppSession} from '~/lib/session';
-import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
+import {AppSession} from '@/lib/session';
+import {CART_QUERY_FRAGMENT} from '@/lib/fragments';
 
 /**
  * Export a fetch handler in module format.

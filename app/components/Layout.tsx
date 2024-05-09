@@ -5,14 +5,15 @@ import type {
   FooterQuery,
   HeaderQuery,
 } from 'storefrontapi.generated';
-import {Aside} from '~/components/Aside';
-import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
-import {CartMain} from '~/components/Cart';
+import {Aside} from '@/components/Aside';
+import {Footer} from '@/components/Footer';
+import {Header} from '@/components/Header';
+import {HeaderCatalogue} from './HeaderCatalogue';
+import {CartMain} from '@/components/Cart';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
-} from '~/components/Search';
+} from '@/components/Search';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -36,11 +37,6 @@ export function Layout({
       <MobileMenuAside menu={header?.menu} shop={header?.shop} />
       {header && <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />}
       <main>{children}</main>
-      <Suspense>
-        <Await resolve={footer}>
-          {(footer) => <Footer menu={footer?.menu} shop={header?.shop} />}
-        </Await>
-      </Suspense>
     </>
   );
 }
@@ -105,11 +101,7 @@ function MobileMenuAside({
     menu &&
     shop?.primaryDomain?.url && (
       <Aside id="mobile-menu-aside" heading="MENU">
-        <HeaderMenu
-          menu={menu}
-          viewport="mobile"
-          primaryDomainUrl={shop.primaryDomain.url}
-        />
+        <HeaderCatalogue menu={menu} />
       </Aside>
     )
   );

@@ -15,7 +15,7 @@ import type {
   LanguageCode,
   CountryCode,
 } from '@shopify/hydrogen/storefront-api-types';
-import type {AppSession} from '~/lib/session';
+import type {AppSession} from '@/lib/session';
 
 declare global {
   /**

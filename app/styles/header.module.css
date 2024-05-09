@@ -1,0 +1,89 @@
+.logo {
+  width: 3.5625rem;
+  height: 3.6875rem;
+}
+
+.catalogue {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 0.71rem;
+  border-radius: 1.125rem;
+  border: 1px solid #fff;
+  cursor: pointer;
+  max-height: 3.5625rem;
+  margin-left: 2rem;
+  transition: all 0.2s ease-in;
+}
+
+.catalogueText {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.headerNav {
+  margin-left: 0.69rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchWrapper {
+  max-width: 34.3125rem;
+  width: 100%;
+}
+
+.searchInput {
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 500;
+  height: 3.5625rem;
+  color: #000;
+  padding: 1rem 2rem;
+  width: 100%;
+  outline: none;
+  border-radius: 1.125rem;
+  background: #fff;
+  transition: background 0.2s ease-in;
+}
+
+.searchInput::placeholder {
+  color: #c0c6d3;
+}
+
+.navCards {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cardText {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #d0d0d0;
+  transition: color 0.2s ease-in;
+}
+
+@media (hover: hover) {
+  .catalogue:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+
+  .searchInput:hover {
+    background: #f8f8f8;
+  }
+
+  .navCard:hover .cardText {
+    color: #fff;
+  }
+}

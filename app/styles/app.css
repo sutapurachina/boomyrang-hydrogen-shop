@@ -129,10 +129,9 @@ aside li {
 */
 .header {
   align-items: center;
-  background: #fff;
+  background: #3882db;
   display: flex;
-  height: var(--header-height);
-  padding: 0 1rem;
+  padding: 2.12rem 2.88rem 2.25rem 3.88rem;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -299,8 +298,6 @@ aside li {
   gap: 1rem;
 }
 
-
-
 /*
 * --------------------------------------------------
 * routes/__index
@@ -332,6 +329,13 @@ aside li {
   @media (min-width: 45em) {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.recommended-product {
+  border-radius: 0.75rem;
+  border: 3px solid #e4e4e4;
+  background: #fff;
+  padding: 1.38rem 1.25rem 1.44rem;
 }
 
 .recommended-product img {

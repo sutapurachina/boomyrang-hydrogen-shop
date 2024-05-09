@@ -14,5 +14,16 @@ module.exports = {
     'no-useless-escape': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     'no-case-declarations': 'off',
+    'no-console': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    'prettier/prettier': [
+      'off',
+      {
+        endOfLine: 'auto',
+        printWidth: 'off',
+      },
+    ],
+    'max-len': 'off',
+    'linebreak-style': 'off',
   },
 };

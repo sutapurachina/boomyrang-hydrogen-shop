@@ -1,7 +1,11 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
+import ozonFat from '@/assets/img/ozonFat.png';
+import ozonThin from '@/assets/img/ozonThin.png';
+import rating from '@/assets/icons/rating.png'
 import {Image, Money} from '@shopify/hydrogen';
+import cls from '@/styles/home.module.css';
 import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
@@ -22,9 +26,9 @@ export async function loader({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+  
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -59,32 +63,44 @@ function RecommendedProducts({
 }) {
   return (
     <div className="recommended-products">
-      <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {({products}) => (
-            <div className="recommended-products-grid">
-              {products.nodes.map((product) => (
-                <Link
-                  key={product.id}
-                  className="recommended-product"
-                  to={`/products/${product.handle}`}
-                >
-                  <Image
-                    data={product.images.nodes[0]}
-                    aspectRatio="1/1"
-                    sizes="(min-width: 45em) 20vw, 50vw"
-                  />
-                  <h4>{product.title}</h4>
-                  <small>
-                    <Money data={product.priceRange.minVariantPrice} />
-                  </small>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
+      <div className={cls['add-block']}>
+        <img className={cls['ozon-image']} src={ozonThin} alt="ozonAD" />
+        <img className={cls['ozon-image']} src={ozonFat} alt="ozonAD" />
+      </div>
+      <div className={cls.products}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await resolve={products}>
+            {({products}) => (
+              <div className="recommended-products-grid">
+                {products.nodes.map((product) => (
+                  <Link
+                    key={product.id}
+                    className="recommended-product"
+                    to='#'
+                  >
+                    <Image
+                      data={product.images.nodes[0]}
+                      aspectRatio="1/1"
+                      sizes="(min-width: 45em) 20vw, 50vw"
+                    />
+                    <h4>{product.title}</h4>
+                    <div className={cls['price-wrapper']}>
+                      <span className={cls.price}>2 189 ₽</span>
+                      <span className={cls.oldPrice}>2 380 ₽</span>
+                    </div>
+                    <p className={cls.description}>Lumicube / Игрушки интерактивные обучающая игра / развивающая / игра для детей</p>
+                    <img style={{marginTop: '0.5rem'}} src={rating} alt="rating" />
+                    <div className={cls.delievery}>
+                      <span className={cls.delieveryText}>Доставка</span>
+                      <span className={cls.delieveryValue}>послезавтра</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
+      </div>
       <br />
     </div>
   );

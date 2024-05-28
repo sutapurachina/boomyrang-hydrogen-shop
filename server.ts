@@ -73,7 +73,9 @@ export default {
         storefront,
         customerAccount,
         getCartId: cartGetIdDefault(request.headers),
-        setCartId: cartSetIdDefault(),
+        setCartId: cartSetIdDefault({
+          maxage: 60 * 60 * 24 * 365,
+        }),
         cartQueryFragment: CART_QUERY_FRAGMENT,
       });
 

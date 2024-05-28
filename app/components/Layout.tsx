@@ -6,7 +6,6 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import {Aside} from '@/components/Aside';
-import {Footer} from '@/components/Footer';
 import {Header} from '@/components/Header';
 import {HeaderCatalogue} from './HeaderCatalogue';
 import {CartMain} from '@/components/Cart';
@@ -26,7 +25,6 @@ export type LayoutProps = {
 export function Layout({
   cart,
   children = null,
-  footer,
   header,
   isLoggedIn,
 }: LayoutProps) {

@@ -4,8 +4,11 @@ import {DelieverySVG} from './svgComponents/delievery';
 import {FavouritesSVG} from './svgComponents/favourites';
 import {ProfileSVG} from './svgComponents/profile';
 import {CartSVG} from './svgComponents/cart';
+import { NavLink, useLocation } from '@remix-run/react';
 
 export const HeaderNav = ({isLoggedIn, cart}: any) => {
+  const locale = useLocation();
+
   return (
     <nav className={cls.headerNav} role="navigation">
       <SearchInput />
@@ -27,7 +30,9 @@ export const HeaderNav = ({isLoggedIn, cart}: any) => {
 
         <div className={cls.navCard}>
           <CartSVG />
-          <p className={cls.cardText}>Корзина</p>
+          <NavLink to={`${locale.pathname}cart`}>
+            <p className={cls.cardText}>Корзина</p>
+          </NavLink>
         </div>
       </div>
     </nav>

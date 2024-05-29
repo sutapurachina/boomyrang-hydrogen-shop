@@ -31,11 +31,13 @@ function CartDetails({layout, cart}: CartMainProps) {
   const cartHasItems = !!cart && cart.totalQuantity > 0;
 
   return (
-    <div className="cart-details">
-      <CartLines lines={cart?.lines} layout={"page"} />
+    <div className={cls.cartWrapper}>
+      <div>
+        <h1 className={cls.titleCart}>Корзина</h1>
+        <CartLines lines={cart?.lines} layout={"page"} />
+      </div>
       {cartHasItems && (
         <CartSummary cost={cart.cost} layout={"page"}>
-          <CartDiscounts discountCodes={cart.discountCodes} />
           <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
         </CartSummary>
       )}
@@ -126,11 +128,9 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
       <a className={cls.buttonOrder} href={checkoutUrl} target="_self">
         <span className={cls.buttonLink}>Заказать</span>
       </a>
-    </div>
   );
 }
 
@@ -143,22 +143,17 @@ export function CartSummary({
   cost: CartApiQueryFragment['cost'];
   layout: CartMainProps['layout'];
 }) {
-  const className =
-    layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
-
   return (
-    <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+    <div aria-labelledby="cart-summary" className={cls.cartInfo}>
+      <h4>Доставка</h4>
+      <div className={cls.subtotalWrapper}>
+        <span className={cls.subtotal}>Итого</span>
           {cost?.subtotalAmount?.amount ? (
-            <Money data={cost?.subtotalAmount} />
+            <Money className={cls.price} data={cost?.subtotalAmount} />
           ) : (
             '-'
           )}
-        </dd>
-      </dl>
+      </div>
       {children}
     </div>
   );
@@ -249,6 +244,7 @@ export function CartEmpty({
 }) {
   return (
     <div hidden={hidden}>
+      <h1 className={cls.titleCart}>Корзина</h1>
       <br />
       <p>
         Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you

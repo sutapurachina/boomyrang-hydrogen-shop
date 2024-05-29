@@ -6,7 +6,7 @@ export const SearchInput = () => {
       <input
         className={cls.searchInput}
         type="text"
-        placeholder="Найти на _____"
+        placeholder="Найти на BOOMYRANG"
       />
     </div>
   );

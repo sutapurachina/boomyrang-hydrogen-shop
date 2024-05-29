@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Await,
@@ -25,6 +25,8 @@ import type {
   SelectedOption,
 } from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '@/lib/variants';
+import cls from '@/styles/products.module.css';
+import {ArrowDownSVG} from '@/components/svgComponents/arrowDown';
 
 export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -118,14 +120,41 @@ export default function Product() {
   return (
     <div className="product">
       <ProductImage image={selectedVariant?.image} />
-      <ProductMain
-        selectedVariant={selectedVariant}
-        product={product}
-        variants={variants}
-      />
+      <div className={cls.productInfo}>
+        <ProductMain
+          selectedVariant={selectedVariant}
+          product={product}
+          variants={variants}
+        />
+        <ProductOrder selectedVariant={selectedVariant}/>
+      </div>
     </div>
   );
 }
+
+const ProductOrder = ({selectedVariant}: {selectedVariant: ProductFragment['selectedVariant']}) => {
+  return (
+    <div className={cls.productOrder}>
+      <ProductPrice selectedVariant={selectedVariant} />
+      <AddToCartButton
+        disabled={!selectedVariant || !selectedVariant.availableForSale}
+        onClick={() => {}}
+        lines={
+          selectedVariant
+            ? [
+                {
+                  merchandiseId: selectedVariant.id,
+                  quantity: 1,
+                },
+              ]
+            : []
+        }
+      >
+        В корзину
+      </AddToCartButton>
+    </div>
+  );
+};
 
 function ProductImage({image}: {image: ProductVariantFragment['image']}) {
   if (!image) {
@@ -136,6 +165,7 @@ function ProductImage({image}: {image: ProductVariantFragment['image']}) {
       <Image
         alt={image.altText || 'Product Image'}
         aspectRatio="1/1"
+        className="product-img"
         data={image}
         key={image.id}
         sizes="(min-width: 45em) 50vw, 100vw"
@@ -154,11 +184,12 @@ function ProductMain({
   variants: Promise<ProductVariantsQuery>;
 }) {
   const {title, descriptionHtml} = product;
+  const [openDescr, setOpenDescr] = useState(false);
+  const onOpen = () => setOpenDescr(!openDescr);
+  
   return (
     <div className="product-main">
       <h1>{title}</h1>
-      <ProductPrice selectedVariant={selectedVariant} />
-      <br />
       <Suspense
         fallback={
           <ProductForm
@@ -181,14 +212,10 @@ function ProductMain({
           )}
         </Await>
       </Suspense>
-      <br />
-      <br />
-      <p>
-        <strong>Description</strong>
-      </p>
-      <br />
-      <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-      <br />
+      <button className={cls.openDescr} onClick={onOpen}>
+        Характеристики: <div className={ openDescr ? cls.arrowRotate : cls.arrow}><ArrowDownSVG /></div>
+      </button>
+      {openDescr && <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />}
     </div>
   );
 }
@@ -212,7 +239,11 @@ function ProductPrice({
           </div>
         </>
       ) : (
-        selectedVariant?.price && <Money data={selectedVariant?.price} />
+        selectedVariant?.price && (
+          <div className={cls.priceBox}>
+            <Money className={cls.productPrice} data={selectedVariant?.price} />
+          </div>
+        )
       )}
     </div>
   );
@@ -236,25 +267,6 @@ function ProductForm({
       >
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
-      <br />
-      <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
-        }}
-        lines={
-          selectedVariant
-            ? [
-                {
-                  merchandiseId: selectedVariant.id,
-                  quantity: 1,
-                },
-              ]
-            : []
-        }
-      >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-      </AddToCartButton>
     </div>
   );
 }
@@ -262,28 +274,28 @@ function ProductForm({
 function ProductOptions({option}: {option: VariantOption}) {
   return (
     <div className="product-options" key={option.name}>
-      <h5>{option.name}</h5>
+      <h5 className={cls.productOptionsTitle}>
+        {option.name}: 
+        <span className={cls.productOptionsValue}> {option.value}</span>
+      </h5>
       <div className="product-options-grid">
         {option.values.map(({value, isAvailable, isActive, to}) => {
           return (
             <Link
-              className="product-options-item"
+              className={`product-options-item ${isActive ? 'active' : ''}`}
               key={option.name + value}
               prefetch="intent"
               preventScrollReset
               replace
               to={to}
-              style={{
-                border: isActive ? '1px solid black' : '1px solid transparent',
-                opacity: isAvailable ? 1 : 0.3,
-              }}
             >
-              {value}
+              <div className={`optionValue-bg-${value}`}>
+                {option.name !== 'Цвет' && <span className={cls.productOptionName}>{value}</span>}
+              </div>
             </Link>
           );
         })}
       </div>
-      <br />
     </div>
   );
 }
@@ -311,6 +323,7 @@ function AddToCartButton({
             value={JSON.stringify(analytics)}
           />
           <button
+            className={cls.addToCartButton}
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}

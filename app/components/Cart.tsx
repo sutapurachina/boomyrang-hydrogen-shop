@@ -11,7 +11,7 @@ type CartMainProps = {
   layout: 'page' | 'aside';
 };
 
-export function CartMain({layout, cart}: CartMainProps) {
+export function CartMain({cart}: CartMainProps) {
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&
@@ -20,8 +20,8 @@ export function CartMain({layout, cart}: CartMainProps) {
 
   return (
     <div className={className}>
-      <CartEmpty hidden={linesCount} layout={layout} />
-      <CartDetails cart={cart} layout={layout} />
+      <CartEmpty hidden={linesCount} layout={"page"} />
+      <CartDetails cart={cart} layout={"page"} />
     </div>
   );
 }
@@ -31,9 +31,9 @@ function CartDetails({layout, cart}: CartMainProps) {
 
   return (
     <div className="cart-details">
-      <CartLines lines={cart?.lines} layout={layout} />
+      <CartLines lines={cart?.lines} layout={"page"} />
       {cartHasItems && (
-        <CartSummary cost={cart.cost} layout={layout}>
+        <CartSummary cost={cart.cost} layout={"page"}>
           <CartDiscounts discountCodes={cart.discountCodes} />
           <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
         </CartSummary>
@@ -55,7 +55,7 @@ function CartLines({
     <div aria-labelledby="cart-lines">
       <ul>
         {lines.nodes.map((line) => (
-          <CartLineItem key={line.id} line={line} layout={layout} />
+          <CartLineItem key={line.id} line={line} layout={"page"} />
         ))}
       </ul>
     </div>

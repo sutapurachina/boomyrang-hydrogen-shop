@@ -12,7 +12,7 @@ import type {
 } from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Truffle Store'}];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {
@@ -29,6 +29,10 @@ export default function Homepage() {
   
   return (
     <div className="home">
+       {/* <div className={cls['add-block']}>
+        <img className={cls['ozon-image']} src={ozonThin} alt="ozonAD" />
+        <img className={cls['ozon-image']} src={ozonFat} alt="ozonAD" />
+      </div> */}
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -63,10 +67,6 @@ function RecommendedProducts({
 }) {
   return (
     <div className="recommended-products">
-      <div className={cls['add-block']}>
-        <img className={cls['ozon-image']} src={ozonThin} alt="ozonAD" />
-        <img className={cls['ozon-image']} src={ozonFat} alt="ozonAD" />
-      </div>
       <div className={cls.products}>
         <Suspense fallback={<div>Loading...</div>}>
           <Await resolve={products}>
@@ -76,16 +76,16 @@ function RecommendedProducts({
                   <Link
                     key={product.id}
                     className="recommended-product"
-                    to='#'
+                    to={`/products/${product.handle}`}
                   >
                     <Image
                       data={product.images.nodes[0]}
                       aspectRatio="1/1"
                       sizes="(min-width: 45em) 20vw, 50vw"
                     />
-                    <h4>{product.title}</h4>
+                    <h4 className={cls.title}>{product.title}</h4>
                     <div className={cls['price-wrapper']}>
-                      <span className={cls.price}>2 189 ₽</span>
+                      <span className={cls.price}>{product.priceRange.minVariantPrice.amount}{product.priceRange.minVariantPrice.currencyCode}</span>
                       <span className={cls.oldPrice}>2 380 ₽</span>
                     </div>
                     <p className={cls.description}>Lumicube / Игрушки интерактивные обучающая игра / развивающая / игра для детей</p>

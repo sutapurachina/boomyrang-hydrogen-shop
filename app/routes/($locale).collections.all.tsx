@@ -1,40 +1,33 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, json} from '@remix-run/react';
 import type { LoaderFunctionArgs } from '@shopify/remix-oxygen';
 import type { Collection } from '@shopify/hydrogen/storefront-api-types';
 
-// Fetch and return API data with a Remix loader function
-export async function loader({params, context}: LoaderFunctionArgs) {
-  const {handle} = params;
-  const {storefront} = context;
-  const data = await storefront.query(COLLECTION_QUERY, {
-    variables: {handle},
-  });
-  return data;
-}
+// export async function loader({context}: LoaderFunctionArgs) {
+//   const {collections} = await context.storefront.query(COLLECTION_QUERY, {});
+//   return json({collections});
+// }
 
-// Render the component using data returned by the loader
 export default function Collection() {
-  const data = useLoaderData<typeof loader>();
-  console.log(data);
+  // const {collections} = useLoaderData<typeof loader>();
+  // console.log(collections);
   return (
     <h1 style={{color: '#fff'}}>Каталог</h1>
   )
 }
 
-// Query the product title by its ID
-const COLLECTION_QUERY = `#graphql
-  {
-    collections(first: 10) {
-      edges {
-        node {
-          id
-          title
-          handle
-          image {
-            src
-          }
-        }
-      }
-    }
-  }
-`
+// const COLLECTION_QUERY = `#graphql
+//   collections(first: 2) {
+//     edges {
+//       node {
+//         id
+//         products(first: 5) {
+//           edges {
+//             node {
+//               id
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// ` as const;

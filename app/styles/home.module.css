@@ -50,6 +50,10 @@
   text-transform: uppercase;
 }
 
+.title {
+  color: #001a34;
+}
+
 .delievery {
   display: flex;
   gap: 0.25rem;

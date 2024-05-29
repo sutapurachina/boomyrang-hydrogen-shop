@@ -1,6 +1,15 @@
+.header {
+  align-items: center;
+  background: #3882db;
+  display: flex;
+  padding: 2.12rem 2.88rem 2.25rem 3.88rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 .logo {
-  width: 3.5625rem;
-  height: 3.6875rem;
+  max-width: 282px;
 }
 
 .catalogue {
@@ -86,5 +95,59 @@
 
   .navCard:hover .cardText {
     color: #fff;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    border-radius: 0px 0px 30px 30px;
+    background: linear-gradient(93deg, #3882db 18.8%, #00d1ff 91.25%);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 11px 26px;
+  }
+
+  .catalogue {
+    display: none;
+  }
+
+  .headerNav {
+    margin-left: 0;
+  }
+
+  .navCards {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #fff;
+    padding: 9px 33px;
+  }
+
+  .cardText {
+    display: none;
+  }
+
+  .searchWrapper {
+    max-width: none;
+  }
+
+  .searchInput {
+    padding: 8px 20px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    height: auto;
+  }
+
+  .logo {
+    max-width: 188px;
+    height: auto;
+    display: block;
   }
 }

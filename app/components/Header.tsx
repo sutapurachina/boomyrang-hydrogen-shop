@@ -1,5 +1,5 @@
 import {NavLink} from '@remix-run/react';
-import logoUrl from '@/assets/icons/logo.png';
+import logoMobile from '@/assets/icons/boomyrang.png';
 import type {LayoutProps} from './Layout';
 import cls from '@/styles/header.module.css';
 import {HeaderCatalogue} from './HeaderCatalogue';
@@ -9,11 +9,11 @@ type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
 export const Header = ({header, isLoggedIn, cart}: HeaderProps) => {
   const {shop, menu} = header;
-  
+
   return (
-    <header className="header">
+    <header className={cls.header}>
       <NavLink prefetch="intent" to="/" end>
-        <img className={cls.logo} src={logoUrl} alt={'logo'} />
+        <img className={cls.logo} src={logoMobile} alt="logo" />
       </NavLink>
       <HeaderCatalogue menu={menu} />
       <HeaderNav isLoggedIn={isLoggedIn} cart={cart} />

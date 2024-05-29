@@ -1,0 +1,93 @@
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 52px 0 0;
+}
+
+.image {
+  object-fit: cover;
+  width: 92.25px;
+  height: 123px;
+  padding: 0.5rem;
+}
+
+.productTitle {
+  color: #000;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.titleInfo a {
+  max-width: 267px;
+}
+
+.quantityWrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.quantityButton {
+  border: none;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  outline: none;
+  background-color: #dedede;
+}
+
+.linePrice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.removeButton {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.buttonOrder {
+  border-radius: 18px;
+  background: #0251af;
+  padding: 16px 0;
+}
+
+.price {
+  color: #3882db;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.quantity {
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.line {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.titleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lineInfo {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.buttonLink {
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}

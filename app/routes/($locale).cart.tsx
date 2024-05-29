@@ -5,6 +5,7 @@ import {CartForm} from '@shopify/hydrogen';
 import {json, type ActionFunctionArgs} from '@shopify/remix-oxygen';
 import {CartMain} from '@/components/Cart';
 import {useRootLoaderData} from '@/lib/root-data';
+import cls from '@/styles/cart.module.css';
 
 export const meta: MetaFunction = () => {
   return [{title: `Hydrogen | Cart`}];
@@ -85,10 +86,10 @@ export async function action({request, context}: ActionFunctionArgs) {
 export default function Cart() {
   const rootData = useRootLoaderData();
   const cartPromise = rootData.cart;
-
+  
   return (
     <div className="cart">
-      <h1>Cart</h1>
+      <h1 className={cls.title}>Корзина</h1>
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await
           resolve={cartPromise}

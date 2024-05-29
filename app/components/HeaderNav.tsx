@@ -12,7 +12,7 @@ export const HeaderNav = ({isLoggedIn, cart}: any) => {
       <SearchInput />
       <div className={cls.navCards}>
         <div className={cls.navCard}>
-          <NavLink to={'/cart'}>
+          <NavLink className={cls.navCardLink} to={'/cart'}>
             <CartSVG />
             <p className={cls.cardText}>Корзина</p>
           </NavLink>

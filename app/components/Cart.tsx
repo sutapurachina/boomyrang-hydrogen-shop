@@ -1,8 +1,10 @@
 import {CartForm, Image, Money} from '@shopify/hydrogen';
 import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
 import {Link} from '@remix-run/react';
+import cls from '@/styles/cart.module.css';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '@/lib/variants';
+import { TrashSVG } from './svgComponents/trash';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -17,7 +19,6 @@ export function CartMain({cart}: CartMainProps) {
     cart &&
     Boolean(cart?.discountCodes?.filter((code) => code.applicable)?.length);
   const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
-
   return (
     <div className={className}>
       <CartEmpty hidden={linesCount} layout={"page"} />
@@ -74,9 +75,10 @@ function CartLineItem({
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <li key={id} className="cart-line">
+    <li key={id} className={cls.line}>
       {image && (
         <Image
+          className={cls.image}
           alt={title}
           aspectRatio="1/1"
           data={image}
@@ -86,32 +88,35 @@ function CartLineItem({
         />
       )}
 
-      <div>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => {
-            if (layout === 'aside') {
-              // close the drawer
-              window.location.href = lineItemUrl;
-            }
-          }}
-        >
-          <p>
-            <strong>{product.title}</strong>
-          </p>
-        </Link>
-        <CartLinePrice line={line} as="span" />
-        <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
-        </ul>
+      <div className={cls.lineInfo}>
+        <div className={cls.titleInfo}>
+          <Link
+            prefetch="intent"
+            to={lineItemUrl}
+            onClick={() => {
+              if (layout === 'aside') {
+                // close the drawer
+                window.location.href = lineItemUrl;
+              }
+            }}
+          >
+            <span className={cls.productTitle}>{product.title}</span>
+          </Link>
+          <ul>
+            {selectedOptions.map((option) => (
+              <li key={option.name}>
+                <small>
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            ))}
+          </ul>
+        </div>
         <CartLineQuantity line={line} />
+        <div className={cls.linePrice}>
+          <CartLinePrice line={line} as="span" />
+          <CartLineRemoveButton lineIds={[line.id]} />
+        </div>
       </div>
     </li>
   );
@@ -122,10 +127,9 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
 
   return (
     <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+      <a className={cls.buttonOrder} href={checkoutUrl} target="_self">
+        <span className={cls.buttonLink}>Заказать</span>
       </a>
-      <br />
     </div>
   );
 }
@@ -167,7 +171,9 @@ function CartLineRemoveButton({lineIds}: {lineIds: string[]}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button type="submit">Remove</button>
+      <button className={cls.removeButton} type="submit">
+        <TrashSVG />
+      </button>
     </CartForm>
   );
 }
@@ -179,30 +185,30 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+    <div className={cls.quantityWrapper}>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
           disabled={quantity <= 1}
+          className={cls.quantityButton}
           name="decrease-quantity"
           value={prevQuantity}
         >
           <span>&#8722; </span>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
+      <span className={cls.quantity}>{quantity}</span>
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
           aria-label="Increase quantity"
           name="increase-quantity"
+          className={cls.quantityButton}
           value={nextQuantity}
         >
           <span>&#43;</span>
         </button>
       </CartLineUpdateButton>
       &nbsp;
-      <CartLineRemoveButton lineIds={[lineId]} />
     </div>
   );
 }
@@ -229,7 +235,7 @@ function CartLinePrice({
 
   return (
     <div>
-      <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />
+      <Money className={cls.price} withoutTrailingZeros {...passthroughProps} data={moneyV2} />
     </div>
   );
 }

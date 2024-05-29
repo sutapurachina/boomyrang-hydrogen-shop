@@ -86,13 +86,6 @@ function RecommendedProducts({
                     <h4 className={cls.title}>{product.title}</h4>
                     <div className={cls['price-wrapper']}>
                       <span className={cls.price}>{product.priceRange.minVariantPrice.amount}{product.priceRange.minVariantPrice.currencyCode}</span>
-                      <span className={cls.oldPrice}>2 380 ₽</span>
-                    </div>
-                    <p className={cls.description}>Lumicube / Игрушки интерактивные обучающая игра / развивающая / игра для детей</p>
-                    <img style={{marginTop: '0.5rem'}} src={rating} alt="rating" />
-                    <div className={cls.delievery}>
-                      <span className={cls.delieveryText}>Доставка</span>
-                      <span className={cls.delieveryValue}>послезавтра</span>
                     </div>
                   </Link>
                 ))}

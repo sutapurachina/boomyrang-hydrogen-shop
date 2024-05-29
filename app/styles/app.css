@@ -515,6 +515,10 @@ aside li {
 }
 
 @media screen and (max-width: 768px) {
+  .cart {
+    margin-bottom: 6rem;
+  }
+
   .recommended-product {
     padding: 10px 12px;
   }

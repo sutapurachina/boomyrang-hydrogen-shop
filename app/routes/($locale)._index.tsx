@@ -4,7 +4,7 @@ import {Suspense} from 'react';
 import ozonFat from '@/assets/img/ozonFat.png';
 import ozonThin from '@/assets/img/ozonThin.png';
 import rating from '@/assets/icons/rating.png'
-import {Image, Money} from '@shopify/hydrogen';
+import {Image, Money, getSelectedProductOptions} from '@shopify/hydrogen';
 import cls from '@/styles/home.module.css';
 import type {
   FeaturedCollectionFragment,
@@ -15,11 +15,27 @@ export const meta: MetaFunction = () => {
   return [{title: 'Boomyrang'}];
 };
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({context, params, request}: LoaderFunctionArgs) {
+  let {handle} = params
   const {storefront} = context;
+  
+  const selectedOptions = getSelectedProductOptions(request).filter(
+    (option) =>
+      // Filter out Shopify predictive search query params
+      !option.name.startsWith('_sid') &&
+      !option.name.startsWith('_pos') &&
+      !option.name.startsWith('_psq') &&
+      !option.name.startsWith('_ss') &&
+      !option.name.startsWith('_v') &&
+      // Filter out third party tracking params
+      !option.name.startsWith('fbclid'),
+  );
+  if (!handle) {
+    handle = 'boomyrang';
+  }
   const {collections} = await storefront.query(FEATURED_COLLECTION_QUERY);
   const featuredCollection = collections.nodes[0];
-  const recommendedProducts = storefront.query(RECOMMENDED_PRODUCTS_QUERY);
+  const recommendedProducts = await storefront.query(RECOMMENDED_PRODUCTS_QUERY);
 
   return defer({featuredCollection, recommendedProducts});
 }
@@ -224,7 +240,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 5, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 100, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
       }

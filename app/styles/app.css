@@ -515,7 +515,9 @@ aside li {
 }
 
 @media screen and (max-width: 768px) {
-  .cart {
+  .cart,
+  .product,
+  .home {
     margin-bottom: 6rem;
   }
 

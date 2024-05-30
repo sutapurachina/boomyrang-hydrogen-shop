@@ -29,7 +29,7 @@ import cls from '@/styles/products.module.css';
 import {ArrowDownSVG} from '@/components/svgComponents/arrowDown';
 
 export const meta: MetaFunction<typeof loader> = ({data, location}) => {
-  return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
+  return [{title: `Boomyrang | ${data?.product.title ?? ''}`}];
 };
 
 export async function loader({params, request, context}: LoaderFunctionArgs) {

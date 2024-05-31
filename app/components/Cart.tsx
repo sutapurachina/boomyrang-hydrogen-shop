@@ -21,8 +21,8 @@ export function CartMain({cart}: CartMainProps) {
   const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
   return (
     <div className={className}>
-      <CartEmpty hidden={linesCount} layout={"page"} />
       <CartDetails cart={cart} layout={"page"} />
+      <CartEmpty hidden={linesCount} layout={"page"} />
     </div>
   );
 }
@@ -244,11 +244,8 @@ export function CartEmpty({
 }) {
   return (
     <div hidden={hidden}>
-      <h1 className={cls.titleCart}>Корзина</h1>
-      <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
+      <p style={{textAlign: 'center'}}>
+        Вы не добавили ни одного товара
       </p>
       <br />
       <Link

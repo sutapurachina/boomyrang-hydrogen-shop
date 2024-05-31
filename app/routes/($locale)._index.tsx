@@ -10,6 +10,7 @@ import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
+import advertise from "@/assets/img/advertise.png";
 
 export const meta: MetaFunction = () => {
   return [{title: 'Boomyrang'}];
@@ -45,10 +46,9 @@ export default function Homepage() {
   
   return (
     <div className="home">
-       {/* <div className={cls['add-block']}>
-        <img className={cls['ozon-image']} src={ozonThin} alt="ozonAD" />
-        <img className={cls['ozon-image']} src={ozonFat} alt="ozonAD" />
-      </div> */}
+       <div className={cls['add-block']}>
+        <img className={cls['ozon-image']} src={advertise} alt="ozonAD" />
+      </div>
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );

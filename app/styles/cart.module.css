@@ -127,6 +127,12 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .cartInfo {
+    max-width: none;
+  }
+}
+
 @media screen and (max-width: 542px) {
   .lineInfo {
     flex-direction: column;

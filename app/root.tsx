@@ -68,6 +68,8 @@ export async function loader({context}: LoaderFunctionArgs) {
     },
   });
 
+  const collectionsPromise = storefront.query(COLLECTION_QUERY);
+
   // await the header query (above the fold)
   const headerPromise = storefront.query(HEADER_QUERY, {
     cache: storefront.CacheLong(),
@@ -78,6 +80,7 @@ export async function loader({context}: LoaderFunctionArgs) {
 
   return defer(
     {
+      collections: await collectionsPromise,
       cart: cartPromise,
       footer: footerPromise,
       header: await headerPromise,
@@ -224,4 +227,17 @@ const FOOTER_QUERY = `#graphql
     }
   }
   ${MENU_FRAGMENT}
+` as const;
+
+const COLLECTION_QUERY = `#graphql
+query {
+  collections(first: 10) {
+    nodes {
+      image {
+        url
+      }
+      title
+    }
+  }
+}
 ` as const;

@@ -5,7 +5,7 @@
   padding: 2.12rem 2.88rem 2.25rem 3.88rem;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .logo {
@@ -20,9 +20,60 @@
   border-radius: 1.125rem;
   border: 1px solid #fff;
   cursor: pointer;
+  outline: none;
+  max-width: 171px;
+  width: 100%;
   max-height: 3.5625rem;
   margin-left: 2rem;
+  z-index: 2;
+  background-color: transparent;
   transition: all 0.2s ease-in;
+}
+
+.catalogueLayout {
+  position: fixed;
+  top: 146px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  transition: background 0.15s ease;
+}
+
+.catalogueClose {
+  margin: 0 auto;
+}
+
+.catalogueList {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 4px;
+  padding: 14px 62px;
+  background-color: #fff;
+}
+
+.catalogueImage {
+  width: 22px;
+  height: 22px;
+}
+
+.catalogueItem {
+  display: flex;
+  align-items: center;
+  padding: 7px 14px;
+  gap: 8px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease-in;
+  cursor: pointer;
+}
+
+.catalogueLink {
+  color: #000;
+  font-size: 16px;
+  line-height: 19.36px;
+  text-decoration: none;
 }
 
 .catalogueText {
@@ -74,6 +125,7 @@ a.navCardLink {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
 }
 
 .navCard {
@@ -103,6 +155,15 @@ a.navCardLink {
   .navCard:hover .cardText {
     color: #fff;
   }
+
+  .catalogueItem:hover {
+    background-color: #eef8ff;
+  }
+}
+
+.catalogue:active {
+  transform: scale(0.98);
+  opacity: 1;
 }
 
 @media screen and (max-width: 768px) {

@@ -12,6 +12,8 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '@/components/Search';
+import type { Collection as CollectionType } from '@shopify/hydrogen/storefront-api-types';
+
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -19,9 +21,11 @@ export type LayoutProps = {
   footer: Promise<FooterQuery>;
   header: HeaderQuery;
   isLoggedIn: Promise<boolean>;
+  collections: Promise<CollectionType>;
 };
 
 export function Layout({
+  collections,
   cart,
   children = null,
   header,
@@ -29,23 +33,9 @@ export function Layout({
 }: LayoutProps) {
   return (
     <>
-      {header && <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />}
+      {header && <Header header={header} collections={collections} cart={cart} isLoggedIn={isLoggedIn} />}
       <main>{children}</main>
     </>
-  );
-}
-
-function CartAside({cart}: {cart: LayoutProps['cart']}) {
-  return (
-    <Aside id="cart-aside" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
-          }}
-        </Await>
-      </Suspense>
-    </Aside>
   );
 }
 

@@ -81,6 +81,7 @@ function RecommendedProducts({
 }: {
   products: Promise<RecommendedProductsQuery>;
 }) {
+  
   return (
     <div className="recommended-products">
       <div className={cls.products}>
@@ -204,17 +205,26 @@ const PRODUCT_FRAGMENT = `#graphql
 ` as const;
 
 const PRODUCT_QUERY = `#graphql
-  query Product(
-    $country: CountryCode
-    $handle: String!
-    $language: LanguageCode
-    $selectedOptions: [SelectedOptionInput!]!
-  ) @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      ...Product
+  query products {
+    products(first: 3) {
+        nodes {
+          title
+        }
     }
   }
-  ${PRODUCT_FRAGMENT}
+` as const;
+
+const COLLECTION_QUERY = `#graphql
+query {
+  collections(first: 10) {
+    nodes {
+      image {
+        url
+      }
+      title
+    }
+  }
+}
 ` as const;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql

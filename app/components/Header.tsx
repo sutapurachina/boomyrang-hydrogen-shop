@@ -5,9 +5,9 @@ import cls from '@/styles/header.module.css';
 import {HeaderCatalogue} from './HeaderCatalogue';
 import {HeaderNav} from './HeaderNav';
 
-type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
+type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn' | 'collections'>;
 
-export const Header = ({header, isLoggedIn, cart}: HeaderProps) => {
+export const Header = ({header, collections, isLoggedIn, cart}: HeaderProps) => {
   const {shop, menu} = header;
 
   return (
@@ -15,7 +15,7 @@ export const Header = ({header, isLoggedIn, cart}: HeaderProps) => {
       <NavLink prefetch="intent" to="/" end>
         <img className={cls.logo} src={logoMobile} alt="logo" />
       </NavLink>
-      <HeaderCatalogue menu={menu} />
+      <HeaderCatalogue catalogue={collections} />
       <HeaderNav isLoggedIn={isLoggedIn} cart={cart} />
     </header>
   );

@@ -28,7 +28,7 @@ export const HeaderCatalogue = ({catalogue}: {catalogue: any}) => {
   return (
     <>
       <CatalogueButton catalogueOpen={catalogueOpen} onClick={onClickHandle} />
-      <div className={cls.catalogueWrapper}>
+      <div className={catalogueOpen ? cls.catalogueWrapper : cls.catalogueWrapperClose}>
         <div
           onClick={onClickHandle}
           onKeyDown={onClickHandle} 

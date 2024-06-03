@@ -8,6 +8,7 @@ import {
 } from '@shopify/hydrogen';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '@/lib/variants';
+import cls from '@/styles/collection.module.css';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -40,19 +41,19 @@ export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
+    <div className={cls.collection}>
       <h1>{collection.title}</h1>
       <p className="collection-description">{collection.description}</p>
       <Pagination connection={collection.products}>
         {({nodes, isLoading, PreviousLink, NextLink}) => (
           <>
             <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+              {isLoading ? 'Loading...' : <span className={cls.loadMore}>↑ Load previous</span>}
             </PreviousLink>
             <ProductsGrid products={nodes} />
             <br />
             <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+              {isLoading ? 'Loading...' : <span className={cls.loadMore}>Load more ↓</span>}
             </NextLink>
           </>
         )}
@@ -88,7 +89,7 @@ function ProductItem({
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="product-item"
+      className={cls.productLink}
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -98,13 +99,14 @@ function ProductItem({
           alt={product.featuredImage.altText || product.title}
           aspectRatio="1/1"
           data={product.featuredImage}
+          className={cls.productImage}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
+      <h4 className={cls.productTitle}>{product.title}</h4>
       <small>
-        <Money data={product.priceRange.minVariantPrice} />
+        <Money className={cls.productPrice} data={product.priceRange.minVariantPrice} />
       </small>
     </Link>
   );

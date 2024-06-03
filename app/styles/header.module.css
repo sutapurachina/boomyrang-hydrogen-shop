@@ -217,6 +217,10 @@ a.navCardLink {
     width: 100%;
   }
 
+  .catalogueWrapperClose {
+    display: none;
+  }
+
   @keyframes catalogueOpen {
     0% {
       transform: translateY(100%);

@@ -1,8 +1,5 @@
 import cls from '@/styles/header.module.css';
 import {SearchInput} from './SearchInput';
-import {DelieverySVG} from './svgComponents/delievery';
-import {FavouritesSVG} from './svgComponents/favourites';
-import {ProfileSVG} from './svgComponents/profile';
 import {CartSVG} from './svgComponents/cart';
 import { NavLink } from '@remix-run/react';
 

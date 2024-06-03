@@ -12,7 +12,7 @@ const CatalogueButton = ({onClick, catalogueOpen} : {onClick: () => void, catalo
         catalogueOpen ? (
           <img src={catalogueClose} className={cls.catalogueClose} alt="closeicon" />
         ) : (
-          <h1 style={{color: '#fff'}}>{catalogueOpen ? catalogueClose : "Каталог"}</h1>
+          <h1 className={cls.catalogueTitle} style={{color: '#fff'}}>{catalogueOpen ? catalogueClose : "Каталог"}</h1>
         )
       }
     </button>

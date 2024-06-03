@@ -529,7 +529,8 @@ aside li {
 }
 
 @media screen and (max-width: 375px) {
-  .recommended-products-grid {
+  .recommended-products-grid,
+  .products-grid {
     grid-template-columns: 1fr;
   }
 

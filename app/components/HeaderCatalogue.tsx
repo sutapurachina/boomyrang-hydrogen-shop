@@ -2,6 +2,7 @@ import cls from '@/styles/header.module.css';
 import catalogueIcon from '@/assets/icons/catalogue.png';
 import catalogueClose from '@/assets/icons/catalogueClose.png';
 import { useState } from 'react';
+import { Link } from '@remix-run/react';
 
 const CatalogueButton = ({onClick, catalogueOpen} : {onClick: () => void, catalogueOpen: boolean}) => {
   return (
@@ -27,12 +28,19 @@ export const HeaderCatalogue = ({catalogue}: {catalogue: any}) => {
   return (
     <>
       <CatalogueButton catalogueOpen={catalogueOpen} onClick={onClickHandle} />
-      <div className={catalogueOpen ? cls.catalogueLayout : cls.catalogueLayoutClose}>
+      <div className={cls.catalogueWrapper}>
+        <div
+          onClick={onClickHandle}
+          onKeyDown={onClickHandle} 
+          role='button'
+          tabIndex={0} 
+          className={catalogueOpen ? cls.catalogueLayout : cls.catalogueLayoutClose}
+        />
         {catalogueOpen && <div className={cls.catalogueList}>
           {collections.map((collection: any, index: number) => 
           <div className={cls.catalogueItem} key={index}>
             {collection.image && (<img className={cls.catalogueImage} src={collection.image.url} alt="icon" />)}
-            <a className={cls.catalogueLink} href={collection.handle && `${collection.handle}`}>{collection.title}</a>
+            <Link className={cls.catalogueLink} onClick={onClickHandle} to={collection.handle && `/collections/${collection.handle}`}>{collection.title}</Link>
           </div>)}
         </div>}
       </div>

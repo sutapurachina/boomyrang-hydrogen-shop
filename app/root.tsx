@@ -237,6 +237,7 @@ query {
         url
       }
       title
+      handle
     }
   }
 }

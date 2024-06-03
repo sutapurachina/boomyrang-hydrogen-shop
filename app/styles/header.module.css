@@ -30,6 +30,12 @@
   transition: all 0.2s ease-in;
 }
 
+.catalogueWrapper {
+  position: absolute;
+  top: 146px;
+  left: 0;
+}
+
 .catalogueLayout {
   position: fixed;
   top: 146px;
@@ -46,12 +52,14 @@
 }
 
 .catalogueList {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: fit-content;
   gap: 4px;
   padding: 14px 62px;
   background-color: #fff;
+  z-index: 2;
 }
 
 .catalogueImage {

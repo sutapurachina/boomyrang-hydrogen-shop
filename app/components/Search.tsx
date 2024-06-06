@@ -333,7 +333,11 @@ export function PredictiveSearchResults() {
   }
 
   if (state === 'loading') {
-    return <div>Loading...</div>;
+    return (
+      <div className={cls.searchResult}>
+        <div>Loading...</div>
+      </div>
+  );
   }
 
   if (!totalResults) {

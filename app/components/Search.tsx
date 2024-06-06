@@ -8,13 +8,13 @@ import {
 import {Image, Money, Pagination} from '@shopify/hydrogen';
 import React, {useRef, useEffect} from 'react';
 import {applyTrackingParams} from '@/lib/search';
-
 import type {
   PredictiveProductFragment,
   PredictiveCollectionFragment,
   PredictiveArticleFragment,
   SearchQuery,
 } from 'storefrontapi.generated';
+import cls from '@/styles/header.module.css'
 
 type PredicticeSearchResultItemImage =
   | PredictiveCollectionFragment['image']
@@ -341,7 +341,7 @@ export function PredictiveSearchResults() {
   }
 
   return (
-    <div className="predictive-search-results">
+    <div className={cls.searchResult}>
       <div>
         {results.map(({type, items}) => (
           <PredictiveSearchResult
@@ -355,8 +355,8 @@ export function PredictiveSearchResults() {
       </div>
       {searchTerm.current && (
         <Link onClick={goToSearchResult} to={`/search?q=${searchTerm.current}`}>
-          <p>
-            View all results for <q>{searchTerm.current}</q>
+          <p className={cls.allResults} >
+            Посмотреть все результаты <q>{searchTerm.current}</q>
             &nbsp; →
           </p>
         </Link>
@@ -387,13 +387,20 @@ type SearchResultTypeProps = {
   type: NormalizedPredictiveSearchResults[number]['type'];
 };
 
+const typeToRussian = {
+  'queries': 'Предложения',
+  'products': 'Продукты',
+  'collections': 'Категория',
+  'pages': 'Страница',
+  'articles': 'Статьи'
+}
+
 function PredictiveSearchResult({
   goToSearchResult,
   items,
   searchTerm,
   type,
 }: SearchResultTypeProps) {
-  const isSuggestions = type === 'queries';
   const categoryUrl = `/search?q=${
     searchTerm.current
   }&type=${pluralToSingularSearchType(type)}`;
@@ -401,7 +408,7 @@ function PredictiveSearchResult({
   return (
     <div className="predictive-search-result" key={type}>
       <Link prefetch="intent" to={categoryUrl} onClick={goToSearchResult}>
-        <h5>{isSuggestions ? 'Suggestions' : type}</h5>
+        <h5 className={cls.categoryTitle}>{typeToRussian[type]}</h5>
       </Link>
       <ul>
         {items.map((item: NormalizedPredictiveSearchResultItem) => (
@@ -435,15 +442,16 @@ function SearchResultItem({goToSearchResult, item}: SearchResultItemProps) {
         <div>
           {item.styledTitle ? (
             <div
+              className={cls.allResults}
               dangerouslySetInnerHTML={{
                 __html: item.styledTitle,
               }}
             />
           ) : (
-            <span>{item.title}</span>
+            <span className={cls.allResults}>{item.title}</span>
           )}
           {item?.price && (
-            <small>
+            <small className={cls.allResults}>
               <Money data={item.price} />
             </small>
           )}

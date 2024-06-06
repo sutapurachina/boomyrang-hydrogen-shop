@@ -103,6 +103,22 @@
   width: 100%;
 }
 
+.searchResult {
+  position: absolute;
+  background-color: #fff;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  box-shadow: 0rem 1rem 8px rgba(0, 0, 0, 0.2);
+  border-radius: 26px;
+}
+
+.allResults,
+.categoryTitle {
+  color: #000;
+}
+
 .searchInput {
   border: none;
   font-size: 1.25rem;

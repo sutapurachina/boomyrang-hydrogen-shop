@@ -49,8 +49,14 @@
   display: block;
   width: 100%;
   text-align: center;
+  text-decoration: none;
   padding: 16px 0;
   margin-top: 20px;
+  transition: background-color 0.2s ease-in;
+}
+
+.buttonOrder:hover {
+  background: #3882db;
 }
 
 .price {

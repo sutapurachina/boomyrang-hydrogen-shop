@@ -401,6 +401,10 @@ aside li {
   margin-bottom: 0;
 }
 
+.product-image {
+  overflow: hidden;
+}
+
 .product-image img {
   width: 353px;
   height: 471px;
@@ -492,8 +496,7 @@ aside li {
 
 .product-img {
   object-fit: contain;
-  border-radius: 18px;
-  border: 0.797px solid var(--2, #f1f3f9);
+  height: 100%;
 }
 
 /*

@@ -1,4 +1,4 @@
-import {Suspense, useState} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Await,
@@ -116,11 +116,19 @@ function redirectToFirstVariant({
 
 export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
-  
   const {selectedVariant} = product;
+  const [image, setImage] = useState('');
+  const photosArray = product.images.nodes;
+  useEffect(() => {
+    setImage(selectedVariant.image?.url)
+  }, [selectedVariant.image])
+  const changeImage = (url: string) => {
+    setImage(url)
+  }
+  
   return (
     <div className="product">
-      <ProductImage image={selectedVariant?.image} />
+      <ProductImage changeImage={changeImage} productImages={photosArray} image={image} />
       <div className={cls.productInfo}>
         <ProductMain
           selectedVariant={selectedVariant}
@@ -157,18 +165,30 @@ const ProductOrder = ({selectedVariant}: {selectedVariant: ProductFragment['sele
   );
 };
 
-function ProductImage({image}: {image: ProductVariantFragment['image']}) {
+interface ProductImageProps {
+  image: string;
+  productImages: {url: string}[];
+  changeImage: (url: string) => void;
+}
+
+function ProductImage(props: ProductImageProps) {
+  const {image, productImages, changeImage} = props
   if (!image) {
     return <div className="product-image" />;
   }
+
   return (
-    <div className="product-image">
+    <div className={cls['product-image']}>
+      <div className={cls.productImages}>
+        {productImages.map((img) => (
+          <Image onClick={() => changeImage(img.url)} className={`${cls.productAsset} ${img.url === image && cls.active}`} key={img.url} src={img.url} />
+        ))}
+      </div>
       <Image
-        alt={image.altText || 'Product Image'}
+        alt={'Product Image'}
         aspectRatio="1/1"
         className="product-img"
-        data={image}
-        key={image.id}
+        src={image}
         sizes="(min-width: 45em) 50vw, 100vw"
       />
     </div>
@@ -381,6 +401,11 @@ const PRODUCT_FRAGMENT = `#graphql
     vendor
     handle
     descriptionHtml
+    images(first: 10) {
+      nodes {
+        url
+      }
+    }
     description
     options {
       name

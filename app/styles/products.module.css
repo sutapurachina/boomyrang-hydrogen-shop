@@ -41,6 +41,38 @@
   letter-spacing: 0.24px;
 }
 
+.product-image {
+  object-fit: contain;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  border: 0.797px solid var(--2, #f1f3f9);
+  border-radius: 18px;
+  padding: 8px;
+  gap: 0.5rem;
+}
+
+.productImages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.productAsset {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.productAsset:hover {
+  opacity: 0.75;
+}
+
+.productAsset.active {
+  border: 2px solid #0251af;
+}
+
 .priceBox {
   border-radius: 8px;
   background: #eef8ff;

@@ -496,7 +496,7 @@ aside li {
 
 .product-img {
   object-fit: contain;
-  height: 100%;
+  height: max-content;
 }
 
 /*

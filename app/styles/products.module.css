@@ -129,8 +129,31 @@
     grid-gap: 0;
   }
 
+  .product-image {
+    height: fit-content;
+  }
+
   .productOrder {
     width: 100%;
     box-shadow: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .product-image {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .productImages {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+@media screen and (max-width: 715px) {
+  .productAsset {
+    height: 68px;
   }
 }

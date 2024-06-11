@@ -181,7 +181,14 @@ function ProductImage(props: ProductImageProps) {
     <div className={cls['product-image']}>
       <div className={cls.productImages}>
         {productImages.map((img) => (
-          <Image onClick={() => changeImage(img.url)} className={`${cls.productAsset} ${img.url === image && cls.active}`} key={img.url} src={img.url} />
+          <Image 
+          width={40} 
+          height={40} 
+          onClick={() => changeImage(img.url)} 
+          className={`${cls.productAsset} ${img.url === image && cls.active}`} 
+          key={img.url} 
+          src={img.url} 
+          />
         ))}
       </div>
       <Image

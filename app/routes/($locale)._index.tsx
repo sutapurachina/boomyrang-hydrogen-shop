@@ -1,9 +1,6 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
-import ozonFat from '@/assets/img/ozonFat.png';
-import ozonThin from '@/assets/img/ozonThin.png';
-import rating from '@/assets/icons/rating.png'
 import {Image, Money, getSelectedProductOptions} from '@shopify/hydrogen';
 import cls from '@/styles/home.module.css';
 import type {
@@ -85,7 +82,7 @@ function RecommendedProducts({
   return (
     <div className="recommended-products">
       <div className={cls.products}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Загрузка...</div>}>
           <Await resolve={products}>
             {({products}) => (
               <div className="recommended-products-grid">
@@ -102,7 +99,9 @@ function RecommendedProducts({
                     />
                     <h4 className={cls.title}>{product.title}</h4>
                     <div className={cls['price-wrapper']}>
-                      <span className={cls.price}>{product.priceRange.minVariantPrice.amount}{product.priceRange.minVariantPrice.currencyCode}</span>
+                        <span className={cls.price}>
+                          {product.priceRange.minVariantPrice.amount} {product.priceRange.minVariantPrice.currencyCode}
+                        </span>
                     </div>
                   </Link>
                 ))}

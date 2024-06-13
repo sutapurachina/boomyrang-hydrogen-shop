@@ -2,9 +2,10 @@ import cls from '@/styles/header.module.css';
 import {SearchInput} from './SearchInput';
 import {CartSVG} from './svgComponents/cart';
 import { Link } from './Link';
-import { Link as RemixLink, useMatches } from '@remix-run/react';
-import { useState } from 'react';
-import { ILocaleData } from '@/lib/utils';
+import { useMatches } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import type { ILocaleData } from '@/lib/utils';
+import cl from 'classnames';
 
 export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
   const availableLanguages = localization?.localization.availableLanguages;
@@ -15,10 +16,24 @@ export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
     setLanguageOpen(!isLanguageOpen); 
   }
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!event.target) return;
+      const target = event.target as HTMLElement;
+      const dropdown = document.getElementById("dropdown-id");
+      if (dropdown && !dropdown.contains(target)) {
+        setLanguageOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleOutsideClick);
+    return () => window.removeEventListener('click', handleOutsideClick);
+  }, []);
+
   return (
     <nav className={cls.headerNav} role="navigation">
       <SearchInput />
-      <div className={cls['dropdown-languages']}>
+      <div id='dropdown-id' className={cls['dropdown-languages']}>
           <button onClick={onOpenDropdown} className={cls['dropdown-trigger']}>
             {selectedLocale ? selectedLocale.language : 'EN' }
           </button>

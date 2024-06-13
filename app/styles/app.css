@@ -397,8 +397,11 @@ aside li {
   display: grid;
   margin-top: 36px;
   @media (min-width: 45em) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(420px, 1fr) 1fr;
     grid-gap: 4rem;
+  }
+  @media (max-width: 1024px) {
+    grid-gap: 1.5rem;
   }
 }
 
@@ -528,8 +531,8 @@ aside li {
 main {
   padding: 0 12rem;
 
-  @media screen and (max-width: 1024px) {
-    padding: 0 6rem;
+  @media screen and (max-width: 1366px) {
+    padding: 0 3rem;
   }
 
   @media screen and (max-width: 768px) {

@@ -9,6 +9,7 @@ type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn' | 'collect
 
 export const Header = ({header, collections, isLoggedIn, cart}: HeaderProps) => {
   const {shop, menu} = header;
+  console.log(menu);
 
   return (
     <header className={cls.header}>

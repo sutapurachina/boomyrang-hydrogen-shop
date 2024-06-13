@@ -32,13 +32,13 @@
 
 .catalogueWrapper {
   position: absolute;
-  top: 146px;
+  top: 138px;
   left: 0;
 }
 
 .catalogueLayout {
   position: fixed;
-  top: 146px;
+  top: 138px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -93,6 +93,7 @@
 .headerNav {
   margin-left: 0.69rem;
   width: 100%;
+  gap: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

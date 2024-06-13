@@ -10,7 +10,7 @@ type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
 type CartMainProps = {
   cart: CartApiQueryFragment | null;
-  layout: 'page' | 'aside';
+  layout?: 'page' | 'aside';
 };
 
 export function CartMain({cart}: CartMainProps) {
@@ -21,13 +21,13 @@ export function CartMain({cart}: CartMainProps) {
   const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
   return (
     <div className={className}>
-      <CartDetails cart={cart} layout={"page"} />
+      <CartDetails cart={cart} />
       <CartEmpty hidden={linesCount} layout={"page"} />
     </div>
   );
 }
 
-function CartDetails({layout, cart}: CartMainProps) {
+function CartDetails({cart}: CartMainProps) {
   const cartHasItems = !!cart && cart.totalQuantity > 0;
 
   return (

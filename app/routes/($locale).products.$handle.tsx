@@ -243,7 +243,7 @@ function ProductMain({
       <button className={cls.openDescr} onClick={onOpen}>
         Характеристики: <div className={ openDescr ? cls.arrowRotate : cls.arrow}><ArrowDownSVG /></div>
       </button>
-      {openDescr && <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />}
+      {openDescr && <div className={cls.description} dangerouslySetInnerHTML={{__html: descriptionHtml}} />}
     </div>
   );
 }

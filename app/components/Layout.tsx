@@ -12,7 +12,7 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '@/components/Search';
-import type { Collection as CollectionType } from '@shopify/hydrogen/storefront-api-types';
+import type { Collection as CollectionType, Localization } from '@shopify/hydrogen/storefront-api-types';
 
 
 export type LayoutProps = {
@@ -22,6 +22,7 @@ export type LayoutProps = {
   header: HeaderQuery;
   isLoggedIn: Promise<boolean>;
   collections: Promise<CollectionType>;
+  languages: Localization;
 };
 
 export function Layout({
@@ -30,10 +31,11 @@ export function Layout({
   children = null,
   header,
   isLoggedIn,
+  languages,
 }: LayoutProps) {
   return (
     <>
-      {header && <Header header={header} collections={collections} cart={cart} isLoggedIn={isLoggedIn} />}
+      {header && <Header header={header} languages={languages} collections={collections} cart={cart} isLoggedIn={isLoggedIn} />}
       <main>{children}</main>
     </>
   );

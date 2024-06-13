@@ -16,6 +16,7 @@ import {
 } from '@shopify/remix-oxygen';
 import {AppSession} from '@/lib/session';
 import {CART_QUERY_FRAGMENT} from '@/lib/fragments';
+import { useMatches } from '@remix-run/react';
 
 /**
  * Export a fetch handler in module format.
@@ -119,15 +120,15 @@ function getLocaleFromRequest(request: Request): I18nLocale {
   const url = new URL(request.url);
   const firstPathPart = url.pathname.split('/')[1]?.toUpperCase() ?? '';
 
-  type I18nFromUrl = [I18nLocale['language'], I18nLocale['country']];
-
   let pathPrefix = '';
-  let [language, country]: I18nFromUrl = ['EN', 'US'];
+  let language: I18nLocale['language'] = 'EN';
+  const country: I18nLocale['country'] = 'US';
 
-  if (/^[A-Z]{2}-[A-Z]{2}$/i.test(firstPathPart)) {
+  if (/^[A-Z]{2}$/i.test(firstPathPart)) {
     pathPrefix = '/' + firstPathPart;
-    [language, country] = firstPathPart.split('-') as I18nFromUrl;
+    language = firstPathPart as I18nLocale['language'];
   }
 
   return {language, country, pathPrefix};
 }
+

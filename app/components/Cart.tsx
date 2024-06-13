@@ -1,6 +1,6 @@
 import {CartForm, Image, Money} from '@shopify/hydrogen';
 import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
-import {Link} from '@remix-run/react';
+import { Link } from './Link';
 import cls from '@/styles/cart.module.css';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '@/lib/variants';

@@ -341,7 +341,9 @@ export function PredictiveSearchResults() {
   }
 
   if (!totalResults) {
-    return <NoPredictiveSearchResults searchTerm={searchTerm} />;
+    return (
+        <NoPredictiveSearchResults searchTerm={searchTerm} />
+    );
   }
 
   return (
@@ -378,9 +380,11 @@ function NoPredictiveSearchResults({
     return null;
   }
   return (
-    <p>
-      No results found for <q>{searchTerm.current}</q>
-    </p>
+    <div className={cls.searchResult}>
+      <p>
+        No results found for <q>{searchTerm.current}</q>
+      </p>
+    </div>
   );
 }
 

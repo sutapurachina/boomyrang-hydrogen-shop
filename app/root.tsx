@@ -78,6 +78,8 @@ export async function loader({context}: LoaderFunctionArgs) {
     },
   });
 
+  const languages = await storefront.query(LANGUAGES_QUERY);
+
   return defer(
     {
       collections: await collectionsPromise,
@@ -85,6 +87,8 @@ export async function loader({context}: LoaderFunctionArgs) {
       footer: footerPromise,
       header: await headerPromise,
       isLoggedIn: isLoggedInPromise,
+      languages,
+      selectedLocale: storefront.i18n,
       publicStoreDomain,
     },
     {
@@ -159,6 +163,17 @@ export function ErrorBoundary() {
   );
 }
 
+const LANGUAGES_QUERY = `#graphql
+  query Languages {
+    localization {
+      availableLanguages {
+        isoCode
+      }
+    }
+  }
+
+`
+
 const MENU_FRAGMENT = `#graphql
   fragment MenuItem on MenuItem {
     id
@@ -230,7 +245,10 @@ const FOOTER_QUERY = `#graphql
 ` as const;
 
 const COLLECTION_QUERY = `#graphql
-query {
+query Collections(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(language: $language, country: $country){
   collections(first: 10) {
     nodes {
       image {

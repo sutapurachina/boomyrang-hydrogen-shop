@@ -1,5 +1,6 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
+import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
+import { Link } from '@/components/Link';
 import {Suspense} from 'react';
 import {Image, Money, getSelectedProductOptions} from '@shopify/hydrogen';
 import cls from '@/styles/home.module.css';

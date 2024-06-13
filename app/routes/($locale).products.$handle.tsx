@@ -2,11 +2,11 @@ import {Suspense, useEffect, useState} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Await,
-  Link,
   useLoaderData,
   type MetaFunction,
   type FetcherWithComponents,
 } from '@remix-run/react';
+import { Link } from '@/components/Link';
 import type {
   ProductFragment,
   ProductVariantsQuery,
@@ -312,9 +312,6 @@ function ProductOptions({option}: {option: VariantOption}) {
             <Link
               className={`product-options-item ${isActive ? 'active' : ''}`}
               key={option.name + value}
-              prefetch="intent"
-              preventScrollReset
-              replace
               to={to}
             >
               <div className={`optionValue-bg-${value}`}>

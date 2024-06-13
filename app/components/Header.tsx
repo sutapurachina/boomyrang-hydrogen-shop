@@ -1,23 +1,24 @@
-import {NavLink} from '@remix-run/react';
+import { Link } from './Link';
 import logoMobile from '@/assets/icons/boomyrang.png';
 import type {LayoutProps} from './Layout';
 import cls from '@/styles/header.module.css';
 import {HeaderCatalogue} from './HeaderCatalogue';
 import {HeaderNav} from './HeaderNav';
 
-type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn' | 'collections'>;
+type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn' | 'collections' | 'languages'>;
 
-export const Header = ({header, collections, isLoggedIn, cart}: HeaderProps) => {
+export const Header = ({header, collections, isLoggedIn, cart, languages}: HeaderProps) => {
   const {shop, menu} = header;
-  console.log(menu);
+  let catalogueTitle = menu && menu.items.filter((item) => item.type === 'CATALOG').map((item) => item.title);
+  if (!catalogueTitle) catalogueTitle=["Каталог"];
 
   return (
     <header className={cls.header}>
-      <NavLink prefetch="intent" to="/" end>
+      <Link prefetch="intent" to="/" end>
         <img className={cls.logo} src={logoMobile} alt="logo" />
-      </NavLink>
-      <HeaderCatalogue catalogue={collections} />
-      <HeaderNav isLoggedIn={isLoggedIn} cart={cart} />
+      </Link>
+      <HeaderCatalogue title={catalogueTitle[0]} catalogue={collections} />
+      <HeaderNav localization={languages} isLoggedIn={isLoggedIn} cart={cart} />
     </header>
   );
 };

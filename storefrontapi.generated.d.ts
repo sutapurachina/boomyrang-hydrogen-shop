@@ -1057,6 +1057,10 @@ export type SearchQueryVariables = StorefrontAPI.Exact<{
     StorefrontAPI.Scalars['String']['input']
   >;
 }>;
+export type Locale = {
+  language: LanguageCode;
+  country: CountryCode;
+};
 
 export type SearchQuery = {
   products: {

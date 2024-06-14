@@ -41,3 +41,33 @@ export const useCartTitle = (lang: string) => {
       return 'Cart';
   }
 }
+
+export const descriptionLocale: Record<string, string> = {
+  "RU": "Характеристики",
+  "FR": "Сaractéristiques",
+  "EN": "Characteristics",
+}
+
+export const addToCart: Record<string, string> = {
+  "RU": "В корзину",
+  "FR": "Ajouter au panier",
+  "EN": "Add to cart",
+}
+
+export const delieveryLocaleCart: Record<string, string> = {
+  "RU": "Доставка",
+  "FR": "Livraison",
+  "EN": "Shipping",
+}
+
+export const totalLocaleCart: Record<string, string> = {
+  "RU": "Итого",
+  "FR": "Total",
+  "EN": "Total",
+}
+
+export const orderLocaleCart: Record<string, string> = {
+  "RU": "Заказать",
+  "FR": "Commande",
+  "EN": "Order",
+}

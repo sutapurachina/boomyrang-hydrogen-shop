@@ -5,6 +5,8 @@ import cls from '@/styles/cart.module.css';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '@/lib/variants';
 import { TrashSVG } from './svgComponents/trash';
+import { useMatches } from '@remix-run/react';
+import { type ILocaleData, delieveryLocaleCart, totalLocaleCart, orderLocaleCart, useCartTitle } from '@/lib/utils';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -28,12 +30,15 @@ export function CartMain({cart}: CartMainProps) {
 }
 
 function CartDetails({cart}: CartMainProps) {
+  const [root] = useMatches();
+  const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
+  const cartTitle = useCartTitle(selectedLanguage);
   const cartHasItems = !!cart && cart.totalQuantity > 0;
 
   return (
     <div className={cls.cartWrapper}>
       <div>
-        <h1 className={cls.titleCart}>Корзина</h1>
+        <h1 className={cls.titleCart}>{cartTitle}</h1>
         <CartLines lines={cart?.lines} layout={"page"} />
       </div>
       {cartHasItems && (
@@ -125,11 +130,14 @@ function CartLineItem({
 }
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
+  const [root] = useMatches();
+  const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
+  const orderText = orderLocaleCart[selectedLanguage]
   if (!checkoutUrl) return null;
 
   return (
       <a className={cls.buttonOrder} href={checkoutUrl} target="_self">
-        <span className={cls.buttonLink}>Заказать</span>
+        <span className={cls.buttonLink}>{orderText}</span>
       </a>
   );
 }
@@ -143,11 +151,15 @@ export function CartSummary({
   cost: CartApiQueryFragment['cost'];
   layout: CartMainProps['layout'];
 }) {
+  const [root] = useMatches();
+  const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
+  const cartTitle = delieveryLocaleCart[selectedLanguage];
+  const totalTitle = totalLocaleCart[selectedLanguage];
   return (
     <div aria-labelledby="cart-summary" className={cls.cartInfo}>
-      <h4>Доставка</h4>
+      <h4>{cartTitle}</h4>
       <div className={cls.subtotalWrapper}>
-        <span className={cls.subtotal}>Итого</span>
+        <span className={cls.subtotal}>{totalTitle}</span>
           {cost?.subtotalAmount?.amount ? (
             <Money className={cls.price} data={cost?.subtotalAmount} />
           ) : (

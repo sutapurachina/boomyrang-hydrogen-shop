@@ -5,6 +5,7 @@ import {
   useLoaderData,
   type MetaFunction,
   type FetcherWithComponents,
+  useMatches,
 } from '@remix-run/react';
 import { Link } from '@/components/Link';
 import type {
@@ -27,6 +28,7 @@ import type {
 import {getVariantUrl} from '@/lib/variants';
 import cls from '@/styles/products.module.css';
 import {ArrowDownSVG} from '@/components/svgComponents/arrowDown';
+import { ILocaleData, addToCart, descriptionLocale } from '@/lib/utils';
 
 export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   return [{title: `Boomyrang | ${data?.product.title ?? ''}`}];
@@ -142,6 +144,9 @@ export default function Product() {
 }
 
 const ProductOrder = ({selectedVariant}: {selectedVariant: ProductFragment['selectedVariant']}) => {
+  const [root] = useMatches();
+  const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
+
   return (
     <div className={cls.productOrder}>
       <ProductPrice selectedVariant={selectedVariant} />
@@ -159,7 +164,7 @@ const ProductOrder = ({selectedVariant}: {selectedVariant: ProductFragment['sele
             : []
         }
       >
-        В корзину
+        {addToCart[selectedLanguage]}
       </AddToCartButton>
     </div>
   );
@@ -211,6 +216,8 @@ function ProductMain({
   selectedVariant: ProductFragment['selectedVariant'];
   variants: Promise<ProductVariantsQuery>;
 }) {
+  const [root] = useMatches();
+  const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
   const {title, descriptionHtml} = product;
   const [openDescr, setOpenDescr] = useState(false);
   const onOpen = () => setOpenDescr(!openDescr);
@@ -241,7 +248,7 @@ function ProductMain({
         </Await>
       </Suspense>
       <button className={cls.openDescr} onClick={onOpen}>
-        Характеристики: <div className={ openDescr ? cls.arrowRotate : cls.arrow}><ArrowDownSVG /></div>
+        {descriptionLocale[selectedLanguage]}: <div className={ openDescr ? cls.arrowRotate : cls.arrow}><ArrowDownSVG /></div>
       </button>
       {openDescr && <div className={cls.description} dangerouslySetInnerHTML={{__html: descriptionHtml}} />}
     </div>

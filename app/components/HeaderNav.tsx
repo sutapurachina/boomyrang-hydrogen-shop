@@ -4,14 +4,14 @@ import {CartSVG} from './svgComponents/cart';
 import { Link } from './Link';
 import { useMatches } from '@remix-run/react';
 import { useEffect, useState } from 'react';
-import type { ILocaleData } from '@/lib/utils';
-import cl from 'classnames';
+import { useCartTitle, type ILocaleData } from '@/lib/utils';
 
 export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
   const availableLanguages = localization?.localization.availableLanguages;
   const [isLanguageOpen, setLanguageOpen] = useState(false);
   const [root] = useMatches();
   const selectedLocale = (root.data as ILocaleData).selectedLocale;
+  const cartTitle = useCartTitle(selectedLocale?.language);
   const onOpenDropdown = () => {
     setLanguageOpen(!isLanguageOpen); 
   }
@@ -32,7 +32,7 @@ export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
 
   return (
     <nav className={cls.headerNav} role="navigation">
-      <SearchInput />
+      <SearchInput language={selectedLocale?.language} />
       <div id='dropdown-id' className={cls['dropdown-languages']}>
           <button onClick={onOpenDropdown} className={cls['dropdown-trigger']}>
             {selectedLocale ? selectedLocale.language : 'EN' }
@@ -49,7 +49,7 @@ export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
         <div className={cls.navCard}>
           <Link className={cls.navCardLink} to={'/cart'}>
             <CartSVG />
-            <p className={cls.cardText}>Корзина</p>
+            <p className={cls.cardText}>{cartTitle}</p>
           </Link>
         </div>
       </div>

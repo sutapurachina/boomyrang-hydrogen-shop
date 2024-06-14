@@ -42,7 +42,6 @@ function FooterMenu({
           </a>
         ) : (
           <NavLink
-            end
             key={item.id}
             prefetch="intent"
             style={activeLinkStyle}

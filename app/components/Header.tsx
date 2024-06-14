@@ -14,7 +14,7 @@ export const Header = ({header, collections, isLoggedIn, cart, languages}: Heade
 
   return (
     <header className={cls.header}>
-      <Link prefetch="intent" to="/" end>
+      <Link prefetch="intent" to="/">
         <img className={cls.logo} src={logoMobile} alt="logo" />
       </Link>
       <HeaderCatalogue title={catalogueTitle[0]} catalogue={collections} />

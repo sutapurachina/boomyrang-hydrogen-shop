@@ -20,6 +20,8 @@
     "@shopify/cli-hydrogen": "^8.0.3",
     "@shopify/hydrogen": "^2024.4.2",
     "@shopify/remix-oxygen": "^2.0.4",
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
     "classnames": "^2.5.1",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",

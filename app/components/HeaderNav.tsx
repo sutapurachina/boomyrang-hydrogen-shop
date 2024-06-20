@@ -5,6 +5,7 @@ import { Link } from './Link';
 import { useMatches } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import { useCartTitle, type ILocaleData } from '@/lib/utils';
+import { getExchangeRates } from '@/api/getCurrency';
 
 export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
   const availableLanguages = localization?.localization.availableLanguages;
@@ -15,6 +16,7 @@ export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
   const onOpenDropdown = () => {
     setLanguageOpen(!isLanguageOpen); 
   }
+  getExchangeRates("USDT");
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {

@@ -12,8 +12,7 @@ export default async function handleRequest(
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     connectSrc: [
-      'https://iss.moex.com',
-      'https://www.cbr.ru',
+      'https://www.cbr-xml-daily.ru',
     ],
   });
 

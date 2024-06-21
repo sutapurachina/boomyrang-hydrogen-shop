@@ -1,4 +1,5 @@
 import {useNonce} from '@shopify/hydrogen';
+import { useState, useContext, createContext } from 'react';
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Links,
@@ -15,6 +16,7 @@ import favicon from './assets/favicon.png';
 import resetStyles from './styles/reset.css?url';
 import appStyles from './styles/app.css?url';
 import {Layout} from '@/components/Layout';
+import { AttitudeProvider } from './components/AttitudeContextProvider';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -112,11 +114,13 @@ export default function App() {
         <Links />
       </head>
       <body>
+      <AttitudeProvider>
         <Layout {...data}>
           <Outlet />
         </Layout>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+      </AttitudeProvider>
       </body>
     </html>
   );

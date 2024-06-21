@@ -1,7 +1,7 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
 import { Link } from '@/components/Link';
-import {Suspense} from 'react';
+import {Suspense, useContext} from 'react';
 import {Image, Money, getSelectedProductOptions} from '@shopify/hydrogen';
 import cls from '@/styles/home.module.css';
 import type {
@@ -9,6 +9,7 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import advertise from "@/assets/img/advertise.png";
+import AttitudeContext from '@/components/AttitudeContextProvider';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Boomyrang'}];
@@ -44,10 +45,10 @@ export default function Homepage() {
   
   return (
     <div className="home">
-       <div className={cls['add-block']}>
-        <img className={cls['ozon-image']} src={advertise} alt="ozonAD" />
-      </div>
-      <RecommendedProducts products={data.recommendedProducts} />
+        <div className={cls['add-block']}>
+          <img className={cls['ozon-image']} src={advertise} alt="ozonAD" />
+        </div>
+        <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
@@ -79,6 +80,8 @@ function RecommendedProducts({
 }: {
   products: Promise<RecommendedProductsQuery>;
 }) {
+  const attitudeCurrency = useContext(AttitudeContext);
+  const currentAttitude = attitudeCurrency.attitude;
   
   return (
     <div className="recommended-products">
@@ -103,6 +106,11 @@ function RecommendedProducts({
                         <span className={cls.price}>
                           {product.priceRange.minVariantPrice.amount} {product.priceRange.minVariantPrice.currencyCode}
                         </span>
+                        {currentAttitude.value !== 1 && (
+                          <span className={cls['another-price']}>
+                            ({(+product.priceRange.minVariantPrice.amount / currentAttitude.value).toFixed(2)} {currentAttitude.isoCode})
+                          </span>
+                        )}
                     </div>
                   </Link>
                 ))}

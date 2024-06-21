@@ -71,3 +71,5 @@ export const orderLocaleCart: Record<string, string> = {
   "FR": "Commande",
   "EN": "Order",
 }
+
+export const availableCurrencys: string[] = ["USD", "EUR", "RUB", "CNY", "JPY", "GBP", "AUD", "IDR"];

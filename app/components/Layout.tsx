@@ -35,8 +35,8 @@ export function Layout({
 }: LayoutProps) {
   return (
     <>
-      {header && <Header header={header} languages={languages} collections={collections} cart={cart} isLoggedIn={isLoggedIn} />}
-      <main>{children}</main>
+        {header && <Header header={header} languages={languages} collections={collections} cart={cart} isLoggedIn={isLoggedIn} />}
+        <main>{children}</main>
     </>
   );
 }

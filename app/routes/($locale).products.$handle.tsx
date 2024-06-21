@@ -1,4 +1,4 @@
-import {Suspense, useEffect, useState} from 'react';
+import {Suspense, useContext, useEffect, useState} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Await,
@@ -29,6 +29,7 @@ import {getVariantUrl} from '@/lib/variants';
 import cls from '@/styles/products.module.css';
 import {ArrowDownSVG} from '@/components/svgComponents/arrowDown';
 import { ILocaleData, addToCart, descriptionLocale } from '@/lib/utils';
+import AttitudeContext from '@/components/AttitudeContextProvider';
 
 export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   return [{title: `Boomyrang | ${data?.product.title ?? ''}`}];
@@ -260,6 +261,9 @@ function ProductPrice({
 }: {
   selectedVariant: ProductFragment['selectedVariant'];
 }) {
+  const attitudeCurrency = useContext(AttitudeContext);
+  const currentAttitude = attitudeCurrency.attitude;
+
   return (
     <div className="product-price">
       {selectedVariant?.compareAtPrice ? (
@@ -277,6 +281,10 @@ function ProductPrice({
         selectedVariant?.price && (
           <div className={cls.priceBox}>
             <Money className={cls.productPrice} data={selectedVariant?.price} />
+            {currentAttitude.value !== 1 && 
+              <span className={cls['price-currency']}>(
+                {(+selectedVariant?.price.amount / currentAttitude.value).toFixed(2)} {currentAttitude.isoCode})
+              </span>}
           </div>
         )
       )}

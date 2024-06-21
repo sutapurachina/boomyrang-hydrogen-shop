@@ -65,6 +65,19 @@
   font-weight: 600;
 }
 
+.priceWrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: fit-content;
+}
+
+.another-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #707f8d;
+}
+
 .quantity {
   color: #000;
   text-align: center;

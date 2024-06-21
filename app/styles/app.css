@@ -535,12 +535,12 @@ main {
     padding: 0 3rem;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 876px) {
     padding: 0 2rem;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 876px) {
   .cart,
   .product,
   .home {
@@ -552,7 +552,7 @@ main {
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 434px) {
   .recommended-products-grid,
   .products-grid {
     grid-template-columns: 1fr;

@@ -7,6 +7,8 @@ import {useVariantUrl} from '@/lib/variants';
 import { TrashSVG } from './svgComponents/trash';
 import { useMatches } from '@remix-run/react';
 import { type ILocaleData, delieveryLocaleCart, totalLocaleCart, orderLocaleCart, useCartTitle } from '@/lib/utils';
+import { useContext } from 'react';
+import AttitudeContext from './AttitudeContextProvider';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -34,7 +36,7 @@ function CartDetails({cart}: CartMainProps) {
   const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
   const cartTitle = useCartTitle(selectedLanguage);
   const cartHasItems = !!cart && cart.totalQuantity > 0;
-
+  
   return (
     <div className={cls.cartWrapper}>
       <div>
@@ -155,13 +157,19 @@ export function CartSummary({
   const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
   const cartTitle = delieveryLocaleCart[selectedLanguage];
   const totalTitle = totalLocaleCart[selectedLanguage];
+  const attitudeCurrency = useContext(AttitudeContext);
+  const currentAttitude = attitudeCurrency.attitude;
+
   return (
     <div aria-labelledby="cart-summary" className={cls.cartInfo}>
       <h4>{cartTitle}</h4>
       <div className={cls.subtotalWrapper}>
         <span className={cls.subtotal}>{totalTitle}</span>
           {cost?.subtotalAmount?.amount ? (
-            <Money className={cls.price} data={cost?.subtotalAmount} />
+            <div className={cls.priceWrapper}>
+              <Money className={cls.price} data={cost?.subtotalAmount} />
+              <span className={cls['another-price']}>{currentAttitude.value !== 1 && `(${(+cost?.subtotalAmount.amount / currentAttitude.value).toFixed(2)} ${currentAttitude.isoCode})`}</span>
+            </div>
           ) : (
             '-'
           )}
@@ -229,6 +237,8 @@ function CartLinePrice({
   priceType?: 'regular' | 'compareAt';
   [key: string]: any;
 }) {
+  const attitudeCurrency = useContext(AttitudeContext);
+  const currentAttitude = attitudeCurrency.attitude;
   if (!line?.cost?.amountPerQuantity || !line?.cost?.totalAmount) return null;
 
   const moneyV2 =
@@ -241,8 +251,9 @@ function CartLinePrice({
   }
 
   return (
-    <div>
+    <div className={cls.priceWrapper}>
       <Money className={cls.price} withoutTrailingZeros {...passthroughProps} data={moneyV2} />
+      <span className={cls['another-price']}>{currentAttitude.value !== 1 && `(${(+moneyV2.amount / currentAttitude.value).toFixed(2)} ${currentAttitude.isoCode})`}</span>
     </div>
   );
 }

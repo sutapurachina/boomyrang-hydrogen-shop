@@ -35,8 +35,10 @@ export const HeaderNav = ({isLoggedIn, cart, localization}: any) => {
   return (
     <nav className={cls.headerNav} role="navigation">
       <SearchInput language={selectedLocale?.language} />
-      <LanguageDropdown localization={localization}/>
-      <CurrencyDropdown chooseCurrency={chooseCurrency}/>
+      <div className={cls['dropdowns-wrapper']}>
+        <LanguageDropdown localization={localization}/>
+        <CurrencyDropdown chooseCurrency={chooseCurrency}/>
+      </div>
       <div className={cls.navCards}>
         <div className={cls.navCard}>
           <Link className={cls.navCardLink} to={'/cart'}>

@@ -76,15 +76,24 @@
 }
 
 .priceBox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
   border-radius: 8px;
   background: #eef8ff;
   padding: 4.69px;
   width: fit-content;
 }
 
+.price-currency {
+  font-size: 16px;
+  font-weight: 500;
+  color: #707f8d;
+}
+
 .productPrice {
   color: #000;
-  font-size: 24.369px;
+  font-size: 24px;
   font-weight: 700;
 }
 

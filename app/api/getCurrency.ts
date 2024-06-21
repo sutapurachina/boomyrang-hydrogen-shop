@@ -9,16 +9,11 @@ export async function getExchangeRates(currency: string) {
     // console.log($('tr'));
     
     // $('tr').each((e, i) => {if ($(i).text().match(regex)) {$(i).children().each((e, x) => array.push($(x).html()))} })
-    const url = 'https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date=2013-12-20';
+    const url = 'https://www.cbr.ru/scripts/XML_daily.asp';
 
     try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        console.log(response);
+        const response = await axios.get(url);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Ошибка при получении курсов валют:', error);

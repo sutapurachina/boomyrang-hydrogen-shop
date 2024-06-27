@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react'
 import cls from '@/styles/header.module.css';
-import { availableCurrencys } from '@/lib/utils';
+import { type ILocaleData, availableCurrencys, currencyLocale } from '@/lib/utils';
+import { useMatches } from '@remix-run/react';
 
 interface CurrencyDropdownProps {
     chooseCurrency: (currencyNew: string) => void;
 }
 
 export const CurrencyDropdown = ({chooseCurrency}: CurrencyDropdownProps) => {
+    const [root] = useMatches();
+     const selectedLanguage = (root.data as ILocaleData).selectedLocale.language;
     const [isCurrencyOpen, setCurrencyOpen] = useState(false);
-    const [currentCurrency, setCurrentCurrency] = useState('USD');
+    const [currentCurrency, setCurrentCurrency] = useState('——');
     const onOpenDropdown = () => {
         setCurrencyOpen(!isCurrencyOpen); 
     }
     const changeCurrency = (currencyNew: string) => {
-        chooseCurrency(currencyNew);
         setCurrentCurrency(currencyNew);
+        if (currencyNew === "——") currencyNew = 'USD';
+        chooseCurrency(currencyNew);
         setCurrencyOpen(false);
     }
     
@@ -33,8 +37,9 @@ export const CurrencyDropdown = ({chooseCurrency}: CurrencyDropdownProps) => {
       }, []);
     return (
         <div id='currency-id' className={cls['dropdown-languages']}>
-            <button onClick={onOpenDropdown} className={cls['dropdown-trigger']}>{currentCurrency}</button>
-            {isCurrencyOpen && <div className={cls['dropdown-menu']}>
+            <button id={cls['trigger-id']} onClick={onOpenDropdown} className={cls['dropdown-trigger']}>{currentCurrency}</button>
+            {isCurrencyOpen && (
+            <div className={cls['dropdown-menu']}>
                 {availableCurrencys?.map((curr: string) => (
                     <button 
                     onClick={() => changeCurrency(curr)} 
@@ -43,7 +48,9 @@ export const CurrencyDropdown = ({chooseCurrency}: CurrencyDropdownProps) => {
                         {curr}
                     </button>
                 ))}
-            </div>}
+            </div>
+            )}
+            <span className={cls.cardText}>{currencyLocale[selectedLanguage]}</span>
         </div>
     )
 }

@@ -1,0 +1,102 @@
+
+body::before {
+  content: '';
+  position: fixed;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: background 0.15s ease;
+}
+
+.modal {
+  width: calc(100% - 30px);
+  max-width: 680px;
+  position: fixed;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999999;
+  box-shadow: 0 0 3px 0 rgba(169, 169, 169, 0.5);
+  background: #fff;
+  border-radius: 20px;
+  padding: 50px 20px;
+}
+
+.modalTitle {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 104%;
+  text-align: center;
+  color: #1569cc;
+  margin-bottom: 30px;
+}
+.modalForm {
+  max-width: 330px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modalForm button {
+  width: 200px;
+  height: 42px;
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: #fff;
+  background-color: #1468CC;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.modalFormField {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.modalFormField label {
+  font-size: 14px;
+  line-height: 139%;
+  color: #7e7e7e;
+}
+.modalFormField input {
+  width: 100%;
+  height: 40px;
+  box-shadow: 0 0 3px 0 rgba(169, 169, 169, 0.5);
+  background: #fff;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  padding: 0 20px;
+  margin: 0;
+}
+.modalFormField input:focus-visible {
+  outline: none;
+}
+.modalFormField input::placeholder {
+  transition: opacity 0.3s;
+  font-size: 14px;
+  color: #d9d9d9;
+}
+.modalFormField input:focus::placeholder {
+  opacity: 0;
+}
+
+@media screen and (max-width: 500px) {
+  .modal {
+    padding: 24px 15px;
+  }
+  .modalTitle { font-size: 22px; }
+  .modalForm button { width: 100%; }
+} 
+@media screen and (max-width: 415px) {
+  .modalFormField { margin-bottom: 16px; }
+} 

@@ -7,12 +7,14 @@ import type {
 } from 'storefrontapi.generated';
 import {Aside} from '@/components/Aside';
 import {Header} from '@/components/Header';
+import {Modal} from '@/components/Modal';
 import {CartMain} from '@/components/Cart';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '@/components/Search';
 import type { Collection as CollectionType, Localization } from '@shopify/hydrogen/storefront-api-types';
+import { M } from 'node_modules/vite/dist/node/types.d-aGj9QkWt';
 
 
 export type LayoutProps = {
@@ -37,6 +39,7 @@ export function Layout({
     <>
         {header && <Header header={header} languages={languages} collections={collections} cart={cart} isLoggedIn={isLoggedIn} />}
         <main>{children}</main>
+        <Modal />
     </>
   );
 }
